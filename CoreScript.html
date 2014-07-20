@@ -9,96 +9,29 @@
 <script src="Sprite.js"></script>
 <script>
 var canvas="canvas_id";
-removeFromArray = function(array,target){
-	var i = array.indexOf(target);
-	if(i != -1) {
-		array.splice(i, 1);
-	}
-};
+var FPS = 60;
+setInterval( mainloop, FPS/1000);
 var walls = []; //solid objects- the player can't walk through these
 var friendlyHitboxes = []; //Player hitboxes, if an enemy attacks these, the player will take damage
 var friendlyAttackboxes = []; //Player attacks' hitboxes, if an enemy is caught inside, they will take damage
 var enemyHitboxes = []; //sets up an empty array named enemyHitboxes
 var enemyAttackboxes = [];
 var animations = [];
+removeFromArray = function(array,target){
+	var i = array.indexOf(target);
+	if(i != -1) {
+		array.splice(i, 1);
+	}
+};
 updateAnimations = function(){
 	for(i = 0; i < animations.length; i++)
 		animations[i].stepFrame();
 };
-/*
-materials:{
-	images:{ /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~THIS IS WHERE YOU LOAD THE IMAGES~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		playerImage: "rsrc/img/Player.png",
-		playerImage2: "rsrc/img/Player2.png",
-		playerPunchRight: "rsrc/img/PlayerPunch.png",
-		playerPunchLeft: "rsrc/img/PlayerPunch2.png"
-		}
-	},
-ready: function(stage) {//When the scene is loaded
-    function addFloor(x, y, w, h) {
-        var entity = Class.New("Entity", [stage]);
-		walls.push(newRect(x, y, w, h, entity));
-        entity.rect(w,h);
-        entity.position(x, y);
-		entity.el.fillStyle = "grey";
-		entity.el.fillRect(0,0,w,h);
-        stage.append(entity.el);//attach the object to the stage
-        return entity;//This needs to be done! It will allow a variable to be set as addFloor, versus just being called as a function!
-    }
-/*~~~~~~~~~~~~~~~~~~~~ENEMY CODE!!!~~~~~~~~~~~~~~~~~~~~~
-	function addEnemy(x,y){//define the function, and the variables inclueded
-		var base = Class.new("Entity", [stage]);
-		var hitboxes = [];
-		base.health = 100;
-		base.position(x,y);
-		base.el.fillStyle = "red";
-		base.el.fillRect(0,-175,100,200);//Render box size
-		base.state = "grounded";
-		stage.append(base.el);
-		base.rect = newRect(x, y, 100, 25, base);
-		base.hitbox = newRect(x, y-175, 100, 200, base);
-		base.hitbox.solid = true;
-		enemyHitboxes.push(base.hitbox);//Add hitbox to the list of enemies
-		hitboxes.push(base.hitbox);
-		base.moveEntity = function(x,y){
-			for (i = 0; i < hitboxes.length; i++) {
-				hitboxes[i].x += x;
-				hitboxes[i].y += y;
-			}
-			base.move(x,y);//move the rendered component
-		}
-		base.kill = function(){
-			base.el.fillRect(0,0,0,0);
-			removeFromArray(enemyHitboxes,base.rect);
-			};
-		base.takeDamage = function(damage){
-			base.health -=damage;
-			if(base.health <= damage){
-				base.kill();
-			};
-		};
-		return base;
-	}
-	
-	
-	
-	this.entityB = addFloor(150, 200, 400, 50);
-	this.Enemy1 = addEnemy(500,300);
-	this.Enemy2 = addEnemy(100,300);
-	this.Enemy2 = addEnemy(350,300);
-*/
-    this.Player = addPlayer(200, 10);
-	this.Controller = addController(this.Player);
-	this.entityC = addFloor(200, 350, 400, 50);
-	canvas.Input.keyDown([Input.Left, Input.Right, Input.Bottom, Input.Up, Input.Z]);//Open keys for checking
-    canvas.Input.keyUp([Input.Left, Input.Right, Input.Bottom, Input.Up, Input.Z]);//ditto
-},
-render: function(stage) {//When each frame is rendered
+this.Player = addPlayer(200, 10);
+this.Controller = addController(this.Player);
+
+var mainloop = function(){
 	this.Player.updateAttack();//Step through the player's attack animation
 	this.Controller.updateKeyboard();
-    stage.refresh();
-  }
-});
-
-
+};
 </script>

@@ -1,5 +1,5 @@
 function addSprite(x, y, xoffset, yoffset, spriteset){
-	var sprite = {
+	/*var sprite = {
 	x:x,
 	y:y,
 	xoffset:xoffset,
@@ -44,5 +44,5 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 		sprite.image.x=x+xoffset;
 		sprite.image.y=y+yoffset;
 	}
-	return sprite;
+	return sprite;*/
 };
