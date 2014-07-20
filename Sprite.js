@@ -18,11 +18,11 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 			frame = 0;
 			ticks = 0;
 		}else
-			console.log("attempted to assign a non-existent spritesheet");
+			throw("attempted to assign a non-existent spritesheet");
 	}
 	
 	sprite.render=function(){
-		sprite.context.drawImage(sprite.current, sprite.x, sprite.y);
+		sprite.context.drawImage(imageOne, sprite.x, sprite.y);
 		if (!sprite.paused)
 		{
 			sprite.ticks ++;
