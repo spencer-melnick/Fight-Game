@@ -1,5 +1,5 @@
 function addSprite(x, y, xoffset, yoffset, spriteset){
-	/*var sprite = {
+	var sprite = {
 	x:x,
 	y:y,
 	xoffset:xoffset,
@@ -8,13 +8,10 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 	current:spriteset[0],
 	ticks:0,
 	frame:0,
-	paused:false
+	paused:false,
+	canvas:document.getElementById("canvas_id"),
 	}
-	
-	sprite.image=scene.createElement();
-	sprite.image.x=sprite.x+sprite.xoffset;
-	sprite.image.y=sprite.y+sprite.yoffset;
-	
+	sprite.context=sprite.canvas.getContext("2d")
 	sprite.setSprite=function(spritesetname){
 		if(spritesetname!=undefined){
 			sprite.spriteset = spritesetname;
@@ -25,7 +22,7 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 	}
 	
 	sprite.render=function(){
-		sprite.image.drawImage(sprite.current);
+		sprite.context.drawImage(sprite.current, sprite.x, sprite.y);
 		if (!sprite.paused)
 		{
 			sprite.ticks ++;
@@ -41,8 +38,8 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 	}
 	
 	sprite.setSpritePosition= function(x,y){
-		sprite.image.x=x+xoffset;
-		sprite.image.y=y+yoffset;
+		sprite.x=x+xoffset;
+		sprite.y=y+yoffset;
 	}
-	return sprite;*/
+	return sprite;
 };
