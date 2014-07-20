@@ -22,7 +22,7 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 	}
 	
 	sprite.render=function(){
-		sprite.context.drawImage(imageOne, sprite.x, sprite.y);
+		sprite.context.drawImage(image.get("PlayerTest"), sprite.x, sprite.y);
 		if (!sprite.paused)
 		{
 			sprite.ticks ++;

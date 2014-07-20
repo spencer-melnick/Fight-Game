@@ -1,9 +1,10 @@
 var key = {
 	isDown : {
 		left : false,
-		right : false,
 		up : false,
-		down : false
+		right : false,
+		down : false,
+		z : false
 	}
 }
 
@@ -12,20 +13,23 @@ function handleKey(keycode, value)
 	switch (event.which)
 	{
 		case 37:
-			key.isDown.left = true;
+			key.isDown.left = value;
 			break;
 		
 		case 38:
-			key.isDown.up = true;
+			key.isDown.up = value;
 			break;
 			
 		case 39:
-			key.isDown.right = true;
+			key.isDown.right = value;
 			break;
 			
 		case 40:
-			key.isDown.left = true;
+			key.isDown.down = value;
 			break;
+			
+		case 90:
+			key.isDown.z = value;
 			
 		default:
 			break;

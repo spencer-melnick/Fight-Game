@@ -4,6 +4,7 @@
 </body>
 <canvas id="canvas_id" width="800" height="600"></canvas>
 <script src="jquery-1.11.1.min.js"></script>
+<script src="src/images.js"></script>
 <script src="Player.js"></script>
 <script src="Hitboxes.js"></script> <!--Load the hitbox script-->
 <script src="Controller.js"></script>
@@ -12,15 +13,14 @@
 var canvas="canvas_id";
 var context=document.getElementById("canvas_id").getContext("2d");
 var FPS = 60;
-var images = [];
-var imageOne = new Image();
-imageOne.src = 'rsrc/img/Player.png';
 var walls = []; //solid objects- the player can't walk through these
 var friendlyHitboxes = []; //Player hitboxes, if an enemy attacks these, the player will take damage
 var friendlyAttackboxes = []; //Player attacks' hitboxes, if an enemy is caught inside, they will take damage
 var enemyHitboxes = []; //sets up an empty array named enemyHitboxes
 var enemyAttackboxes = [];
 var animations = [];
+
+image.load("rsrc/img/Player.png", "PlayerTest");
 
 removeFromArray = function(array,target){
 	var i = array.indexOf(target);
