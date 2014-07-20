@@ -22,7 +22,7 @@ int main()
 
         window.clear();
 
-        //draw stuff
+        //draw stuff yay
 
         window.display();
     }
