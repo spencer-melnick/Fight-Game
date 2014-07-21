@@ -10,6 +10,7 @@
 <script src="src/Controller.js"></script>
 <script src="src/Sprite.js"></script>
 <script src="src/keys.js"></script>
+<script src="src/enemy.js"></script>
 <script>
 var canvas="canvas_id";
 var context=document.getElementById("canvas_id").getContext("2d");
@@ -25,6 +26,7 @@ image.load("rsrc/img/Player.png", "PlayerTest");
 image.load("rsrc/img/Player2.png", "PlayerTest2");
 image.load("rsrc/img/PlayerPunch.png", "PlayerPunchRight");
 image.load("rsrc/img/PlayerPunch2.png", "PlayerPunchLeft");
+image.load("rsrc/img/Enemy.png", "Enemy");
 
 if (window.jQuery)
 	console.log("jQuery loaded");
@@ -45,11 +47,13 @@ updateAnimations = function(){
 
 this.Player = addPlayer(200, 200);
 this.Controller = addController(this.Player);
+var someEnemy = new Enemy(500,200,1,100,200,"Enemy",100);
 
 var mainloop = function(){
 	context.clearRect(0,0,800,600);
 	this.Controller.updateKeyboard();
-	this.Player.updateAttack();//Step through the player's attack animation
+	this.Player.updateAttack();
+	someEnemy.sprite.render();//Step through the player's attack animation
 	//this.Controller.updateKeyboard();
 };
 
