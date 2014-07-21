@@ -47,14 +47,12 @@ updateAnimations = function(){
 };
 
 this.Player = addPlayer(200, 200);
-this.Controller = addController(this.Player);
-var someEnemy = new Enemy(500,200,1,100,200,"Enemy",100);
+this.Controller = addController(this.Player, 7, 3);
+new Enemy(500,200,1,100,200,"Enemy",100);
 
 var mainloop = function(){
 	this.Controller.updateKeyboard();
-	//this.Player.updateAttack();
-	someEnemy.sprite.render();//Step through the player's attack animation
-	//this.Controller.updateKeyboard();
+	this.Player.updateAttack();//Step through the player's attack animation
 	context.clearRect(0,0,800,600);
 	scene.render();
 };

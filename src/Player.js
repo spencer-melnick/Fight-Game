@@ -43,7 +43,6 @@
 			else
 			{
 				base.sprite.setSprite(base['punch'+base.facing+'Sheet']);
-				//console.log(base['punch'+base.facing+'Sheet']);
 				base.isAttacking = true;
 				base.attackFrame = 0;
 			}

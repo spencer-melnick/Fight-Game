@@ -20,9 +20,11 @@ function Enemy(x,y,z,width,height,image, health){
 	};
 	
 	this.kill = function(){
-		delete this.sprite;
 		removeFromArray(enemyHitboxes, this.hitbox);
+		scene.remove(this.sprite.render);
+		delete this.sprite;
 		delete this.hitbox;
+		delete this;
 	};
 	return this;
 };
