@@ -7,7 +7,7 @@ function Enemy(x,y,z,width,height,depth,image,health){
 	this.image=image;
 	this.health=health;
 	
-	this.sprite = addSprite(x,y,z,-50,0,[image]);
+	this.sprite = addSprite(x,y,z,-50,-175,[image]);
 	this.hitbox = newRect(x, y, z, width, height, depth, this);
 	console.log(this.hitbox);
 	enemyHitboxes.push(this.hitbox);

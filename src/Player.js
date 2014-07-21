@@ -23,6 +23,7 @@
 		base.hitboxes.push(base.hitbox);//Add to the list of self hitboxes -- this enables it to be moved with the player when the 'moveEntity()' function is called
 		base.punchBoxRight = newRect(x+75, y-50, z, 75, 75, 75, base);//The hitbox of the punch attack
 		base.punchBoxRight.solid=false;
+		console.log(base.punchBoxRight);
 		base.punchBoxLeft = newRect(x-50, y-50, z, 75, 75, 75, base);
 		base.punchBoxLeft.solid=false;
 		base.hitboxes.push(base.punchBoxRight, base.punchBoxLeft);
@@ -75,12 +76,11 @@
 			for (i = 0; i < base.hitboxes.length; i++) {
 				base.hitboxes[i].x += x;
 				base.hitboxes[i].y += y;
-				base.hitboxes[i].x += z;
+				base.hitboxes[i].z += z;
 			}
 			this.x+=x;
 			this.y+=y;
 			this.z+=z;
-			console.log(base.rect);
 			base.sprite.setSpritePosition(base.rect.x,base.rect.y,base.rect.z);
 		}	
 		/*base.checkCanMove = function(x,y,z, array){
