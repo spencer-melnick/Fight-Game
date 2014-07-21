@@ -22,7 +22,7 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 	}
 	
 	sprite.render=function(){
-		sprite.context.drawImage(image.get("PlayerTest"), sprite.x, sprite.y);
+		sprite.context.drawImage(image.get(sprite.current), sprite.x, sprite.y);
 		if (!sprite.paused)
 		{
 			sprite.ticks ++;
@@ -41,5 +41,6 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 		sprite.x=x+xoffset;
 		sprite.y=y+yoffset;
 	}
+	sprite.setSpritePosition(x,y);
 	return sprite;
 };

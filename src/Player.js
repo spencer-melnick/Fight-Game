@@ -7,13 +7,13 @@
 		facing:"Right",
 		}
 		//Define animation sheets
-		var walkSheet = ["playerImage", "playerImage2"];
-		base.punchRightSheet = ["playerPunchRight"];
-		base.punchLeftSheet = ["playerPunchLeft"];
+		base.walkSheet = ["PlayerTest","PlayerTest","PlayerTest2","PlayerTest2"];
+		base.punchRightSheet = ["PlayerPunchRight"];
+		base.punchLeftSheet = ["PlayerPunchLeft"];
 		
 		
 		
-		base.sprite = addSprite(x,y,-50,-175,walkSheet);
+		base.sprite = addSprite(x,y,-50,-175,base.walkSheet);
 		base.state = "grounded";//Is the player jumping, standing or fallen over?
 		base.rect = newRect(x, y, 100, 25, base);//The feet of the player -- the only part that collides with a wall
 		base.hitbox = newRect(x, y-175, 100, 200, base);//The hitbox of the player, used for registering hits on the player
@@ -71,7 +71,7 @@
 				}
 				else
 					{base.attackFrame=0;
-					base.sprite.setSprite(walkSheet);
+					base.sprite.setSprite(base.walkSheet);
 					base.isAttacking = false;}
 			}
 		};

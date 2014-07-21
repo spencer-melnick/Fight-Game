@@ -10,7 +10,7 @@ var key = {
 
 function handleKey(keycode, value)
 {
-	switch (event.which)
+	switch (keycode)
 	{
 		case 37:
 			key.isDown.left = value;
@@ -36,10 +36,10 @@ function handleKey(keycode, value)
 	}
 }
 
-$(document).keydown(function(event) {
+$(document).bind("keydown",function(event) {
 	handleKey(event.which, true);
 });
 
-$(document).keyup(function(event) {
+$(document).bind("keyup",function(event) {
 	handleKey(event.which, false);
 });
