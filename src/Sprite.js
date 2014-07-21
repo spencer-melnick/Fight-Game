@@ -1,3 +1,48 @@
+function SceneObject(renderfunc, depth) {
+	this.render = renderfunc;
+	this.depth = depth;
+	return this;
+};
+
+var scene = {
+	sprites : [],
+	
+	get : function(renderfunc) {
+		for (i = 0; i < this.sprites.length; i ++) {
+			if (this.sprites[i].render == renderfunc)
+				return i;
+		}
+		return Number.NaN;
+	},
+	
+	remove : function(renderfunc) {
+		if (this.get(renderfunc))
+			this.sprites.splice(i, 1);
+	},
+	
+	add : function(renderfunc, depth) {
+		var i = 0;
+		for (i = 0; i < this.sprites.length; i ++) {
+			if (this.sprites[i].depth > depth)
+				break;
+		}
+		this.sprites.splice(i, 0, new SceneObject(renderfunc, depth));
+	},
+	
+	setDepth : function(renderfunc, depth) {
+		var x = this.get(renderfunc);
+		if (!isNaN(x))
+			this.sprites.splice(x, 1);
+		this.add(renderfunc, depth);
+	},
+	
+	render : function() {
+		for (var i in this.sprites) {
+			this.sprites[i].render();
+		}
+	}
+};
+
 function addSprite(x, y, xoffset, yoffset, spriteset){
 	var sprite = {
 	x:x,
@@ -17,7 +62,7 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 			sprite.spriteset = spritesetname;
 			frame = 0;
 			ticks = 0;
-		}else
+	}else
 			throw("attempted to assign a non-existent spritesheet");
 	}
 	
@@ -40,7 +85,9 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 	sprite.setSpritePosition= function(x,y){
 		sprite.x=x+xoffset;
 		sprite.y=y+yoffset;
+		scene.setDepth(sprite.render, sprite.y);
 	}
 	sprite.setSpritePosition(x,y);
+	
 	return sprite;
-};
+};	

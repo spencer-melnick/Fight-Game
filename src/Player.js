@@ -35,10 +35,7 @@
 			if((direction=="Right" || direction=="Left") && direction!=base.facing){
 				base.facing = direction;
 			}
-		};
-		base.updateAnimation = function(){
-			base.sprite.render();
-		};			
+		};		
 		base.executeAttack = function(){
 			if(base.isAttacking){
 				return;
@@ -59,7 +56,6 @@
 		};
 		base.updateAttack = function(){
 			var currentAttackBox = base.getCurrentAttackBox();
-			base.updateAnimation();
 			currentAttackBox.solid = base.isAttacking;
 			if(base.isAttacking){
 				if(base.attackFrame < base.attackFrameCount){

@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<meta charset="UTF-8">
 <body>
 <p>Welcome to the early version of the fighting engine!</br>To move, use the arrow keys. To punch, press 'Z'.</br>Only works in Firefox, because of the file domain.</br>This text will be gone in the final version.</p>
 </body>
@@ -50,11 +51,12 @@ this.Controller = addController(this.Player);
 var someEnemy = new Enemy(500,200,1,100,200,"Enemy",100);
 
 var mainloop = function(){
-	context.clearRect(0,0,800,600);
 	this.Controller.updateKeyboard();
-	this.Player.updateAttack();
+	//this.Player.updateAttack();
 	someEnemy.sprite.render();//Step through the player's attack animation
 	//this.Controller.updateKeyboard();
+	context.clearRect(0,0,800,600);
+	scene.render();
 };
 
 setInterval(mainloop, 1000/FPS);
