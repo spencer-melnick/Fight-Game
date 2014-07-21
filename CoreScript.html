@@ -12,6 +12,7 @@
 <script src="src/Sprite.js"></script>
 <script src="src/keys.js"></script>
 <script src="src/enemy.js"></script>
+<script src="src/debuggerRender.js"></script>
 <script>
 var canvas="canvas_id";
 var context=document.getElementById("canvas_id").getContext("2d");
@@ -57,6 +58,7 @@ var mainloop = function(){
 	this.Player.updateAttack();//Step through the player's attack animation
 	context.clearRect(0,0,800,600);//Clear the image buffer
 	scene.render();
+	debuggerRender([friendlyHitboxes,friendlyAttackboxes,walls]);
 };
 
 setInterval(mainloop, 1000/FPS);
