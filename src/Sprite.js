@@ -16,7 +16,8 @@ var scene = {
 	},
 	
 	remove : function(renderfunc) {
-		if (this.get(renderfunc))
+		var x = this.get(renderfunc);
+		if (!isNaN(x))
 			this.sprites.splice(i, 1);
 	},
 	
