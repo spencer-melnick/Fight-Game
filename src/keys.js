@@ -38,6 +38,7 @@ function handleKey(keycode, value)
 
 $(document).bind("keydown",function(event) {
 	handleKey(event.which, true);
+	event.preventDefault();
 });
 
 $(document).bind("keyup",function(event) {
