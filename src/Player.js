@@ -16,8 +16,8 @@
 		
 		base.sprite = addSprite(x,y,z,-50,-175,base.walkSheet);
 		base.state = "grounded";//Is the player jumping, standing or fallen over?
-		base.rect = newRect(x, y, z, 100, 25, base);//The feet of the player -- the only part that collides with a wall
-		base.hitbox = newRect(x, y-175, z, 100, 200, base);//The hitbox of the player, used for registering hits on the player
+		base.rect = newRect(x, y, z, 100, 25, 25, base);//The feet of the player -- the only part that collides with a wall
+		base.hitbox = newRect(x, y-175, z, 100, 200, 25, base);//The hitbox of the player, used for registering hits on the player
 		base.hitbox.solid = true;
 		friendlyHitboxes.push(base.hitbox);//Add hitbox to the list of players
 		base.hitboxes.push(base.hitbox);//Add to the list of self hitboxes -- this enables it to be moved with the player when the 'moveEntity()' function is called

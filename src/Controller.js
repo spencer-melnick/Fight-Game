@@ -19,7 +19,7 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 				if (!controller.puppet.rect.touching(walls))
 					controller.puppet.moveEntity(-vel, 0, 0);
 				else
-					controller.puppet.rect.x += xvel;
+					controller.puppet.rect.x += vel;
 			}
 			if(key.isDown.up){
 				controller.puppet.rect.z -= vel;
@@ -37,7 +37,6 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 			}
 			if(key.isDown.z){
 				controller.puppet.executeAttack();
-				console.log(puppet.punchBoxRight);
 			}
 		}
 	}

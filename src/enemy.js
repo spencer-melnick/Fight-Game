@@ -11,6 +11,7 @@ function Enemy(x,y,z,width,height,depth,image,health){
 	this.hitbox = newRect(x, y, z, width, height, depth, this);
 	console.log(this.hitbox);
 	enemyHitboxes.push(this.hitbox);
+	walls.push(this.hitbox);
 	
 	this.takeDamage = function(damage){
 		console.log("enemy has taken damage!");
