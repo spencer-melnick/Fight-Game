@@ -44,10 +44,11 @@ var scene = {
 	}
 };
 
-function addSprite(x, y, xoffset, yoffset, spriteset){
+function addSprite(x, y, z, xoffset, yoffset, spriteset){
 	var sprite = {
 	x:x,
 	y:y,
+	z:z,
 	xoffset:xoffset,
 	yoffset:yoffset,
 	spriteset:spriteset,
@@ -68,7 +69,7 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 	}
 	
 	sprite.render=function(){
-		sprite.context.drawImage(image.get(sprite.current), sprite.x, sprite.y);
+		sprite.context.drawImage(image.get(sprite.current), sprite.x, sprite.y + (sprite.z/zScale));
 		if (!sprite.paused)
 		{
 			sprite.ticks ++;
@@ -83,12 +84,13 @@ function addSprite(x, y, xoffset, yoffset, spriteset){
 		}
 	}
 	
-	sprite.setSpritePosition= function(x,y){
+	sprite.setSpritePosition= function(x,y,z){
 		sprite.x=x+xoffset;
 		sprite.y=y+yoffset;
-		scene.setDepth(sprite.render, sprite.y);
+		sprite.z=z;
+		scene.setDepth(sprite.render, sprite.z);
 	}
-	sprite.setSpritePosition(x,y);
+	sprite.setSpritePosition(x,y,z);
 	
 	return sprite;
 };	

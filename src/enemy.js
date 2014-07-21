@@ -1,4 +1,4 @@
-function Enemy(x,y,z,width,height,image, health){
+function Enemy(x,y,z,width,height,depth,image,health){
 	this.x=x;
 	this.y=y;
 	this.z=z;
@@ -7,8 +7,9 @@ function Enemy(x,y,z,width,height,image, health){
 	this.image=image;
 	this.health=health;
 	
-	this.sprite = addSprite(x,y,-50,0,[image]);
-	this.hitbox = newRect(x, y, width, height, this);
+	this.sprite = addSprite(x,y,z,-50,0,[image]);
+	this.hitbox = newRect(x, y, z, width, height, depth, this);
+	console.log(this.hitbox);
 	enemyHitboxes.push(this.hitbox);
 	
 	this.takeDamage = function(damage){
