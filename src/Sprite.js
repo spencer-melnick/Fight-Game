@@ -1,5 +1,5 @@
-function SceneObject(renderfunc, depth) {
-	this.render = renderfunc;
+function SceneObject(sprite, depth) {
+	this.sprite = sprite;
 	this.depth = depth;
 	return this;
 };
@@ -7,39 +7,39 @@ function SceneObject(renderfunc, depth) {
 var scene = {
 	sprites : [],
 	
-	get : function(renderfunc) {
+	get : function(sprite) {
 		for (i = 0; i < this.sprites.length; i ++) {
-			if (this.sprites[i].render == renderfunc)
+			if (this.sprites[i].sprite == sprite)
 				return i;
 		}
 		return Number.NaN;
 	},
 	
-	remove : function(renderfunc) {
-		var x = this.get(renderfunc);
+	remove : function(sprite) {
+		var x = this.get(sprite);
 		if (!isNaN(x))
-			this.sprites.splice(i, 1);
+			this.sprites.splice(x, 1);
 	},
 	
-	add : function(renderfunc, depth) {
+	add : function(sprite, depth) {
 		var i = 0;
 		for (i = 0; i < this.sprites.length; i ++) {
 			if (this.sprites[i].depth > depth)
 				break;
 		}
-		this.sprites.splice(i, 0, new SceneObject(renderfunc, depth));
+		this.sprites.splice(i, 0, new SceneObject(sprite, depth));
 	},
 	
-	setDepth : function(renderfunc, depth) {
-		var x = this.get(renderfunc);
+	setDepth : function(sprite, depth) {
+		var x = this.get(sprite);
 		if (!isNaN(x))
 			this.sprites.splice(x, 1);
-		this.add(renderfunc, depth);
+		this.add(sprite, depth);
 	},
 	
 	render : function() {
 		for (var i in this.sprites) {
-			this.sprites[i].render();
+			this.sprites[i].sprite.render();
 		}
 	}
 };
@@ -88,7 +88,7 @@ function addSprite(x, y, z, xoffset, yoffset, spriteset){
 		sprite.x=x+xoffset;
 		sprite.y=y+yoffset;
 		sprite.z=z;
-		scene.setDepth(sprite.render, sprite.z);
+		scene.setDepth(sprite, sprite.z);
 	}
 	sprite.setSpritePosition(x,y,z);
 	
