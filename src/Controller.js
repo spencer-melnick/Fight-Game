@@ -39,7 +39,10 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 				controller.puppet.executeAttack();
 			}
 			if (key.isDown.x){
-				controller.puppet.fallspeed = -10;
+				if(controller.puppet.state=="standing"){
+					controller.puppet.fallspeed = -15;
+					controller.puppet.state="midair";
+				}
 			}
 		}
 	}
