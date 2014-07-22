@@ -1,3 +1,9 @@
+var walls = []; //solid objects- the player can't walk through these
+var friendlyHitboxes = []; //Player hitboxes, if an enemy attacks these, the player will take damage
+var friendlyAttackboxes = []; //Player attacks' hitboxes, if an enemy is caught inside, they will take damage
+var enemyHitboxes = []; //sets up an empty array named enemyHitboxes
+var enemyAttackboxes = [];
+
 function newRect(x, y, z, w, h, d, owner)
 {
 	var rect = {
@@ -11,29 +17,31 @@ function newRect(x, y, z, w, h, d, owner)
 	solid:true,
 	touching: function(array)
 	{
-		for (i = 0; i < array.length; i++) { 
-			if ((this.x + this.w) > array[i].x)
-				if (this.x < (array[i].x + array[i].w))
-					if ((this.y + this.h) > array[i].y)
-						if (this.y < (array[i].y + array[i].h))
-							if ((this.z + this.d) > array[i].z)
-								if (this.z < (array[i].z + array[i].d))
-									if (this.solid)
-										return true;
+		for (i = 0; i < array.length; i++) {
+			if (array[i] != this)
+				if ((this.x + this.w) > array[i].x)
+					if (this.x < (array[i].x + array[i].w))
+						if ((this.y + this.h) > array[i].y)
+							if (this.y < (array[i].y + array[i].h))
+								if ((this.z + this.d) > array[i].z)
+									if (this.z < (array[i].z + array[i].d))
+										if (this.solid)
+											return true;
 			}				
 		return false;
 	},
 	getContact: function(array)
 	{
-		for (i = 0; i < array.length; i++) { 
-			if ((this.x + this.w) > array[i].x)
-				if (this.x < (array[i].x + array[i].w))
-					if ((this.y + this.h) > array[i].y)
-						if (this.y < (array[i].y + array[i].h))
-							if ((this.z + this.d) > array[i].z)
-								if (this.z < (array[i].z + array[i].d))
-									if (this.solid)
-										return array[i].owner;
+		for (i = 0; i < array.length; i++) {
+			if (array[i] != this)
+				if ((this.x + this.w) > array[i].x)
+					if (this.x < (array[i].x + array[i].w))
+						if ((this.y + this.h) > array[i].y)
+							if (this.y < (array[i].y + array[i].h))
+								if ((this.z + this.d) > array[i].z)
+									if (this.z < (array[i].z + array[i].d))
+										if (this.solid)
+											return array[i].owner;
 			}				
 		return;
 	}
