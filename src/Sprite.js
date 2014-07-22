@@ -44,13 +44,14 @@ var scene = {
 	}
 };
 
-function addSprite(x, y, z, xoffset, yoffset, spriteset){
+function addSprite(x, y, z, xoffset, yoffset, zoffset, spriteset){
 	var sprite = {
 	x:x,
 	y:y,
 	z:z,
 	xoffset:xoffset,
 	yoffset:yoffset,
+	zoffset:zoffset,
 	spriteset:spriteset,
 	current:spriteset[0],
 	ticks:0,
@@ -69,7 +70,7 @@ function addSprite(x, y, z, xoffset, yoffset, spriteset){
 	}
 	
 	sprite.render=function(){
-		sprite.context.drawImage(image.get(sprite.current), sprite.x, sprite.y + (sprite.z/zScale));
+		sprite.context.drawImage(image.get(sprite.current), sprite.x, sprite.y + ((sprite.z+sprite.zoffset)/zScale));
 		if (!sprite.paused)
 		{
 			sprite.ticks ++;

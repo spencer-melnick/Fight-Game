@@ -44,10 +44,10 @@ updateAnimations = function(){
 		animations[i].stepFrame();
 };
 
-this.Player = addPlayer(100, 0, 600);
+this.Player = addPlayer(100, 0, 200);
 this.Controller = addController(this.Player, 7);
-new Enemy(500,0,600,100,200,100,"Enemy",100);
-new Enemy(250,0,600,100,200,100,"Enemy",100);
+new Enemy(500,0,300,100,200,100,"Enemy",100);
+new Enemy(250,0,300,100,200,100,"Enemy",100);
 
 var mainloop = function(){
 	this.Controller.updateKeyboard();
