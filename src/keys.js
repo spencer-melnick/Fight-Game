@@ -4,6 +4,7 @@ var key = {
 		up : false,
 		right : false,
 		down : false,
+		x : false,
 		z : false
 	}
 }
@@ -26,6 +27,10 @@ function handleKey(keycode, value)
 			
 		case 40:
 			key.isDown.down = value;
+			break;
+			
+		case 88:
+			key.isDown.x = value;
 			break;
 			
 		case 90:

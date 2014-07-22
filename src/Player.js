@@ -13,6 +13,7 @@
 		base.punchLeftSheet = ["PlayerPunchLeft"];
 		
 		base.sprite = addSprite(x,y,z,-50,0,50,base.walkSheet);
+		base.sprite.shadow = addSprite(x, y, z, 0, 0, 5, ["PlayerShadow"]);
 		
 		base.state = "grounded";//Is the player jumping, standing or fallen over?
 		base.rect = newRect(x, y, z, 100, 200, 100, base);//The feet of the player -- the only part that collides with a wall
@@ -32,6 +33,8 @@
 		base.isAttacking = false;
 		base.attackFrame = 0;
 		base.attackFrameCount = 11;//Attack lasts 12 frames
+		
+		base.fallspeed = terminal;
 		
 		
 //~~~~~~~~~~~~~~~~~~~~SET FUNCTIONS~~~~~~~~~~~~~~~~~~~~~~~~~		
@@ -62,14 +65,17 @@
 		
 		base.stepGravity = function(gravityconstant){
 			if(!isNaN(gravityconstant)){
-				base.rect.y += gravityconstant;
+				base.fallspeed += gravityconstant;
+				base.fallspeed = Math.min(terminal, base.fallspeed);
+				base.rect.y += base.fallspeed;
 				if (!base.rect.touching(walls))
-					base.moveEntity(0, gravityconstant, 0);
+					base.moveEntity(0, base.fallspeed, 0);
 				else
-					base.rect.y -= gravityconstant;
+					base.rect.y -= base.fallspeed;
 			}
 			else 
 				throw("attempted to set an undefined gravity constant to 'Player'");
+			base.sprite.shadow.setSpritePosition(base.rect.x,base.rect.y + base.rect.h + base.rect.raycastDown(floors),base.rect.z - 0.2);
 		};
 		
 		base.update = function(){

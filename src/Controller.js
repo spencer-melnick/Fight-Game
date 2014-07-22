@@ -38,6 +38,9 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 			if(key.isDown.z){
 				controller.puppet.executeAttack();
 			}
+			if (key.isDown.x){
+				controller.puppet.fallspeed = -10;
+			}
 		}
 	}
 	return controller;
