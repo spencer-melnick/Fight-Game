@@ -6,6 +6,11 @@ var key = {
 		down : false,
 		x : false,
 		z : false
+	},
+	
+	onPress : {
+		z : [],
+		x : []
 	}
 }
 
@@ -15,35 +20,55 @@ function handleKey(keycode, value)
 	{
 		case 37:
 			key.isDown.left = value;
-			break;
+			return true;
 		
 		case 38:
 			key.isDown.up = value;
-			break;
+			return true;
 			
 		case 39:
 			key.isDown.right = value;
-			break;
+			return true;
 			
 		case 40:
 			key.isDown.down = value;
-			break;
+			return true;
 			
 		case 88:
 			key.isDown.x = value;
-			break;
+			return true;
 			
 		case 90:
 			key.isDown.z = value;
+			return true;
 			
 		default:
-			break;
+			return false;
 	}
 }
 
 $(document).bind("keydown",function(event) {
-	handleKey(event.which, true);
 	event.preventDefault();
+	
+	switch (event.which) {
+		case 88:
+			if (!key.isDown.x) {
+				for (i = 0; i < key.onPress.x.length; i ++) {
+					key.onPress.x[i]();
+				}
+			}
+			break;
+			
+		case 90:
+			if (!key.isDown.z) {
+				for (i = 0; i < key.onPress.z.length; i ++) {
+					key.onPress.z[i]();
+				}
+			}
+			break;
+	}
+	
+	handleKey(event.which, true);
 });
 
 $(document).bind("keyup",function(event) {
