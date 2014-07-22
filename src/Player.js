@@ -23,11 +23,13 @@
 		base.hitboxes.push(base.hitbox);//Add to the list of self hitboxes -- this enables it to be moved with the player when the 'moveEntity()' function is called
 		base.punchBoxRight = newRect(x+75, y-50, z, 75, 75, 75, base);//The hitbox of the punch attack
 		base.punchBoxRight.solid=false;
-		console.log(base.punchBoxRight);
+		console.log(base.rect);
 		base.punchBoxLeft = newRect(x-50, y-50, z, 75, 75, 75, base);
 		base.punchBoxLeft.solid=false;
 		base.hitboxes.push(base.punchBoxRight, base.punchBoxLeft);
 		friendlyAttackboxes.push(base.punchBoxRight, base.punchBoxLeft);
+		
+		
 		base.isAttacking = false;
 		base.attackFrame = 0;
 		base.attackFrameCount = 11;//Attack lasts 12 frames
@@ -38,7 +40,8 @@
 			if((direction=="Right" || direction=="Left") && direction!=base.facing){
 				base.facing = direction;
 			}
-		};		
+		};
+		
 		base.executeAttack = function(){
 			if(base.isAttacking){
 				return;
@@ -50,13 +53,28 @@
 				base.attackFrame = 0;
 			}
 		};
+		
 		base.getCurrentAttackBox = function(){
 			if(base.facing=="Right")
 				return base.punchBoxRight;
 			if(base.facing=="Left")
 				return base.punchBoxLeft;
 		};
-		base.updateAttack = function(){
+		
+		base.stepGravity = function(gravityconstant){
+			if(!isNaN(gravityconstant)){
+				base.rect.y += gravityconstant;
+				if (!base.rect.touching(walls))
+					base.moveEntity(0, gravityconstant, 0);
+				else
+					base.rect.y -= gravityconstant;
+			}
+			else 
+				throw("attempted to set an undefined gravity constant to 'Player'");
+		};
+		
+		base.update = function(){
+			base.stepGravity(gravity);
 			var currentAttackBox = base.getCurrentAttackBox();
 			currentAttackBox.solid = base.isAttacking;
 			if(base.isAttacking){
@@ -73,6 +91,7 @@
 					base.isAttacking = false;}
 			}
 		};
+		
 		base.moveEntity = function(x,y,z){
 			for (i = 0; i < base.hitboxes.length; i++) {
 				base.hitboxes[i].x += x;

@@ -18,6 +18,7 @@ var canvas="canvas_id";
 var context=document.getElementById("canvas_id").getContext("2d");
 var FPS = 60;
 var zScale = 2;
+var gravity = 0;
 var walls = []; //solid objects- the player can't walk through these
 var friendlyHitboxes = []; //Player hitboxes, if an enemy attacks these, the player will take damage
 var friendlyAttackboxes = []; //Player attacks' hitboxes, if an enemy is caught inside, they will take damage
@@ -55,7 +56,7 @@ new Enemy(250,0,600,100,200,100,"Enemy",100);
 
 var mainloop = function(){
 	this.Controller.updateKeyboard();
-	this.Player.updateAttack();//Step through the player's attack animation
+	this.Player.update();//Step through the player's attack animation
 	context.clearRect(0,0,800,600);//Clear the image buffer
 	scene.render();
 	debuggerRender([friendlyHitboxes,friendlyAttackboxes,walls]);
