@@ -24,7 +24,7 @@ function Enemy(x,y,z,width,height,depth,image,health){
 	this.kill = function(){
 		removeFromArray(walls, this.hitbox);
 		removeFromArray(enemyHitboxes, this.hitbox);
-		scene.remove(this.sprite.render);
+		scene.remove(this.sprite);
 		delete this.sprite;
 		delete this.hitbox;
 		delete this;
