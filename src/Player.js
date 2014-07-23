@@ -13,7 +13,7 @@ function addPlayer(x,y,z) {
 	base.punchLeftSheet = [3];
 	
 	base.sprite = addSprite(x,y,z,-50,0,50,base.walkSheet,"PlayerTest",200,200);
-	//base.sprite.shadow = addSprite(x, y, z, 0, 0, 5, ["PlayerShadow"]);
+	base.sprite.shadow = new StaticSprite(x, y, z, 0, 0, 5, "PlayerShadow");
 	
 	base.state = "standing";//Is the player jumping, standing or fallen over?
 	base.rect = newRect(x, y, z, 100, 200, 100, base);//The feet of the player -- the only part that collides with a wall
@@ -80,7 +80,7 @@ function addPlayer(x,y,z) {
 		}
 		else 
 			throw("attempted to set an undefined gravity constant to 'Player'");
-		//base.sprite.shadow.setSpritePosition(base.rect.x,base.rect.y + base.rect.h + base.rect.raycastDown(floors),base.rect.z - 0.2);
+		base.sprite.shadow.setSpritePosition(base.rect.x,base.rect.y + base.rect.h + base.rect.raycastDown(floors),base.rect.z - 0.2);
 	};
 	
 	base.update = function(){

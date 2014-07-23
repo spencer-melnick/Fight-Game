@@ -44,6 +44,35 @@ var scene = {
 	}
 };
 
+function StaticSprite(x, y, z, xoffset, yoffset, zoffset, imagename) {
+	this.x = x;
+	this.y = y;
+	this.z = z;
+	
+	this.xoffset = xoffset;
+	this.yoffset = yoffset;
+	this.zoffset = zoffset;
+	
+	this.image = image.get(imagename);
+	this.canvas = document.getElementById("canvas_id")
+	this.context = context = this.canvas.getContext("2d");
+	
+	this.render = function() {
+		this.context.drawImage(this.image, this.x, this.y + ((this.z + this.zoffset) / zScale));
+	};
+	
+	this.setSpritePosition = function(x, y, z) {
+		this.x = x + this.xoffset;
+		this.y = y + this.yoffset;
+		this.z = z;
+		scene.setDepth(this, this.z);
+	}
+	
+	this.setSpritePosition(this.x, this.y, this.z);
+	
+	return this;
+}
+
 function addSprite(x, y, z, xoffset, yoffset, zoffset, animationframes, imagename, spritewidth, spriteheight) {
 	var sprite = {
 		x : x,
