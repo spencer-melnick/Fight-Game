@@ -35,16 +35,23 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 				else
 					controller.puppet.rect.z -= vel;
 			}
-			if(key.isDown.z){
-				controller.puppet.executeAttack();
-			}
-			if (key.isDown.x){
-				if(controller.puppet.state=="standing"){
-					controller.puppet.fallspeed = -15;
-					controller.puppet.state="midair";
-				}
-			}
 		}
+	};
+	
+	controller.onJump = function() {
+		if(controller.puppet.state=="standing")
+		{
+			controller.puppet.fallspeed = -15;
+			controller.puppet.state="midair";
+		}
+	};
+	
+	controller.onAttack = function() {
+		controller.puppet.executeAttack();
 	}
+	
+	key.onPress.x.push(controller.onJump);
+	key.onPress.z.push(controller.onAttack);
+	
 	return controller;
 }
