@@ -44,7 +44,7 @@ var scene = {
 	}
 };
 
-function addSprite(x, y, z, xoffset, yoffset, zoffset, spriteset){
+function addSprite(x, y, z, xoffset, yoffset, zoffset, animationframes, imagename, spritewidth, spriteheight){
 	var sprite = {
 	x:x,
 	y:y,
@@ -52,25 +52,45 @@ function addSprite(x, y, z, xoffset, yoffset, zoffset, spriteset){
 	xoffset:xoffset,
 	yoffset:yoffset,
 	zoffset:zoffset,
-	spriteset:spriteset,
-	current:spriteset[0],
+	animationframes:animationframes,//this should be an array
+	sourceimage:image.get(imagename),
 	ticks:0,
 	frame:0,
 	paused:false,
+	spritewidth:spritewidth,
+	spriteheight:spriteheight,
 	canvas:document.getElementById("canvas_id"),
 	}
+	sprite.xTileCount = sprite.sourceimage.width / sprite.spritewidth;
+	sprite.tileCount = (sprite.xTileCount * (sprite.sourceimage.height / sprite.spriteheight));
+	sprite.xTile = 0;
+	sprite.yTile = 0;
 	sprite.context=sprite.canvas.getContext("2d")
-	sprite.setSprite=function(spritesetname){
-		if(spritesetname!=undefined){
-			sprite.spriteset = spritesetname;
-			frame = 0;
-			ticks = 0;
-	}else
-			throw("attempted to assign a non-existent spritesheet");
+	
+	sprite.setTile = function(tileid){
+		if(tileid>=sprite.tileCount){
+			console.log("Attempted to assign a tile out of range");
+			return;
+		}else{
+			sprite.xTile = tileid % sprite.xTileCount;
+			sprite.yTile = (tileid - sprite.xTile) / sprite.xTileCount;
+		}
 	}
 	
+	sprite.setAnimation = function(array){
+		sprite.animationframes = array;
+	};
+	
 	sprite.render=function(){
-		sprite.context.drawImage(image.get(sprite.current), sprite.x, sprite.y + ((sprite.z+sprite.zoffset)/zScale));
+		sprite.context.drawImage(sprite.sourceimage,
+		(sprite.xTile) * sprite.spritewidth,
+		(sprite.yTile) * sprite.spriteheight,
+		sprite.spritewidth,
+		sprite.spriteheight,
+		sprite.x,
+		sprite.y + ((sprite.z+sprite.zoffset)/zScale),
+		sprite.spritewidth,
+		sprite.spriteheight);
 		if (!sprite.paused)
 		{
 			sprite.ticks ++;
@@ -78,9 +98,9 @@ function addSprite(x, y, z, xoffset, yoffset, zoffset, spriteset){
 			{
 				sprite.ticks = 0;
 				sprite.frame ++;
-				if (sprite.frame >= sprite.spriteset.length)
+				if (sprite.frame >= sprite.animationframes.length)
 					sprite.frame = 0;
-				sprite.current = sprite.spriteset[sprite.frame];
+				sprite.setTile(sprite.animationframes[sprite.frame]);
 			}
 		}
 	}

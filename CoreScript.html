@@ -22,7 +22,7 @@ var gravity = .5;
 var terminal = 8;
 var animations = [];
 
-image.load("rsrc/img/Player.png", "PlayerTest");
+image.load("rsrc/img/PlayerSheet.png", "PlayerTest");
 image.load("rsrc/img/Player2.png", "PlayerTest2");
 image.load("rsrc/img/PlayerShadow.png", "PlayerShadow");
 image.load("rsrc/img/PlayerPunch.png", "PlayerPunchRight");
@@ -48,8 +48,8 @@ updateAnimations = function(){
 
 this.Player = addPlayer(100, 0, 300);
 this.Controller = addController(this.Player, 7);
-new Enemy(500,0,300,100,200,100,"Enemy",100);
-new Enemy(250,0,300,100,200,100,"Enemy",100);
+//new Enemy(500,0,300,100,200,100,"Enemy",100);
+//new Enemy(250,0,300,100,200,100,"Enemy",100);
 var floor = newRect(0, 200, 0, 800, 10, 600, null);
 walls.push(floor);
 floors.push(floor);
