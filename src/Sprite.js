@@ -44,53 +44,59 @@ var scene = {
 	}
 };
 
-function addSprite(x, y, z, xoffset, yoffset, zoffset, animationframes, imagename, spritewidth, spriteheight){
+function addSprite(x, y, z, xoffset, yoffset, zoffset, animationframes, imagename, spritewidth, spriteheight) {
 	var sprite = {
-	x:x,
-	y:y,
-	z:z,
-	xoffset:xoffset,
-	yoffset:yoffset,
-	zoffset:zoffset,
-	animationframes:animationframes,//this should be an array
-	sourceimage:image.get(imagename),
-	ticks:0,
-	frame:0,
-	paused:false,
-	spritewidth:spritewidth,
-	spriteheight:spriteheight,
-	canvas:document.getElementById("canvas_id"),
-	}
+		x : x,
+		y : y,
+		z : z,
+		xoffset : xoffset,
+		yoffset : yoffset,
+		zoffset : zoffset,
+		animationframes : animationframes,//this should be an array
+		sourceimage : image.get(imagename),
+		ticks : 0,
+		frame : 0,
+		paused : false,
+		spritewidth : spritewidth,
+		spriteheight : spriteheight,
+		canvas : document.getElementById("canvas_id"),
+	};
+	
 	sprite.xTileCount = sprite.sourceimage.width / sprite.spritewidth;
 	sprite.tileCount = (sprite.xTileCount * (sprite.sourceimage.height / sprite.spriteheight));
 	sprite.xTile = 0;
 	sprite.yTile = 0;
-	sprite.context=sprite.canvas.getContext("2d")
+	sprite.context = sprite.canvas.getContext("2d");
 	
-	sprite.setTile = function(tileid){
-		if(tileid>=sprite.tileCount){
+	sprite.setTile = function(tileid) 
+	{
+		if (tileid >= sprite.tileCount)
+		{
 			console.log("Attempted to assign a tile out of range");
 			return;
-		}else{
+		}
+		else
+		{
 			sprite.xTile = tileid % sprite.xTileCount;
 			sprite.yTile = (tileid - sprite.xTile) / sprite.xTileCount;
 		}
 	}
 	
-	sprite.setAnimation = function(array){
+	sprite.setAnimation = function(array) {
 		sprite.animationframes = array;
 	};
 	
-	sprite.render=function(){
+	sprite.render = function() {
 		sprite.context.drawImage(sprite.sourceimage,
-		(sprite.xTile) * sprite.spritewidth,
-		(sprite.yTile) * sprite.spriteheight,
-		sprite.spritewidth,
-		sprite.spriteheight,
-		sprite.x,
-		sprite.y + ((sprite.z+sprite.zoffset)/zScale),
-		sprite.spritewidth,
-		sprite.spriteheight);
+			(sprite.xTile) * sprite.spritewidth,
+			(sprite.yTile) * sprite.spriteheight,
+			sprite.spritewidth,
+			sprite.spriteheight,
+			sprite.x,
+			sprite.y + ((sprite.z+sprite.zoffset)/zScale),
+			sprite.spritewidth,
+			sprite.spriteheight);
+			
 		if (!sprite.paused)
 		{
 			sprite.ticks ++;
@@ -105,13 +111,13 @@ function addSprite(x, y, z, xoffset, yoffset, zoffset, animationframes, imagenam
 		}
 	}
 	
-	sprite.setSpritePosition= function(x,y,z){
-		sprite.x=x+xoffset;
-		sprite.y=y+yoffset;
-		sprite.z=z;
+	sprite.setSpritePosition= function(x, y, z) {
+		sprite.x = x+xoffset;
+		sprite.y = y+yoffset;
+		sprite.z = z;
 		scene.setDepth(sprite, sprite.z);
 	}
-	sprite.setSpritePosition(x,y,z);
+	sprite.setSpritePosition(x, y, z);
 	
 	return sprite;
 };	
