@@ -50,8 +50,13 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 		controller.puppet.executeAttack();
 	}
 	
+	controller.toggleDebug = function() {
+		debug = !debug;
+	}
+	
 	key.onPress.x.push(controller.onJump);
 	key.onPress.z.push(controller.onAttack);
+	key.onPress.t.push(controller.toggleDebug);
 	
 	return controller;
 }

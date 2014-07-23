@@ -5,12 +5,14 @@ var key = {
 		right : false,
 		down : false,
 		x : false,
-		z : false
+		z : false,
+		t : false
 	},
 	
 	onPress : {
 		z : [],
-		x : []
+		x : [],
+		t : []
 	}
 }
 
@@ -41,6 +43,10 @@ function handleKey(keycode, value)
 		case 90:
 			key.isDown.z = value;
 			return true;
+		
+		case 84:
+			key.isDown.t = value;
+			return true;
 			
 		default:
 			return false;
@@ -63,6 +69,14 @@ $(document).bind("keydown",function(event) {
 			if (!key.isDown.z) {
 				for (i = 0; i < key.onPress.z.length; i ++) {
 					key.onPress.z[i]();
+				}
+			}
+			break;
+			
+		case 84:
+			if (!key.isDown.t) {
+				for (i = 0; i < key.onPress.t.length; i ++) {
+					key.onPress.t[i]();
 				}
 			}
 			break;

@@ -1,7 +1,11 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <body>
-<p>Welcome to the early version of the fighting engine!</br>To move, use the arrow keys. To punch, press 'Z'.</br>Only works in Firefox, because of the file domain.</br>This text will be gone in the final version.</p>
+<p>Welcome to the early version of the fighting engine!
+</br>To move, use the arrow keys. To punch, press 'Z'. To jump, press 'X'.
+</br>Press 'T' to toggle rendering of hitboxes.
+</br>Only works in Firefox, because of the file domain.
+</br>This text will be gone in the final version.</p>
 </body>
 <canvas id="canvas_id" width="800" height="600"></canvas>
 <script src="src/jq/jquery-1.11.1.min.js"></script>
@@ -21,12 +25,10 @@ var zScale = 2;
 var gravity = .5;
 var terminal = 8;
 var animations = [];
+var debug = false;
 
 image.load("rsrc/img/PlayerSheet.png", "PlayerTest");
-image.load("rsrc/img/Player2.png", "PlayerTest2");
 image.load("rsrc/img/PlayerShadow.png", "PlayerShadow");
-image.load("rsrc/img/PlayerPunch.png", "PlayerPunchRight");
-image.load("rsrc/img/PlayerPunch2.png", "PlayerPunchLeft");
 image.load("rsrc/img/Enemy.png", "Enemy");
 
 if (window.jQuery)
