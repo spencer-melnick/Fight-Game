@@ -44,9 +44,9 @@ function addPlayer(x,y,z) {
 		if((typeof currentAttack != undefined) && (isAttacking)) {
 			if(attackFrame < (currentAttack.duration - 1)) {
 				attackFrame += 1;
-				if(currentAttack.hitbox.touching(enemyHitboxes) && (attackFrame == 1)) {
+				if(currentAttack.hitbox.touching(enemyHitboxes) && (attackFrame == 2)) {
 					var target=currentAttack.hitbox.getContact(enemyHitboxes);
-					target.takeDamage(1000);
+					target.takeDamage(currentAttack.damage);
 				}
 			}
 			else
