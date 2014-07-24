@@ -2,68 +2,63 @@ function addPlayer(x,y,z) {
 	var base = {
 	hitboxes : [],
 	sprites : [],
-	x:x,
-	y:y,
-	z:z,
-	facing:"Right",
+	x  :x,
+	y : y,
+	z : z,
+	fallspeed : terminal,
 	}
+	facing = "Right";
+	state = "standing";
+	isAttacking = false;
+	attackFrame = 0;
+	
 	//Define animation sheets
-	base.walkSheet = [0,0,1,1];
-	base.punchRightSheet = [2];
-	base.punchLeftSheet = [3];
+	walkSheet = [0,0,1,1];
+	punchRightSheet = [2];
+	punchLeftSheet = [3];
 	
-	base.sprite = addSprite(x,y,z,-50,0,50,base.walkSheet,"PlayerTest",200,200);
-	base.sprite.shadow = new StaticSprite(x, y, z, 0, 0, 5, "PlayerShadow");
+	sprite = addSprite(x,y,z,-50,0,50,walkSheet,"PlayerTest",200,200);
+	sprite.shadow = new StaticSprite(x, y, z, 0, 0, 5, "PlayerShadow");
 	
-	base.state = "standing";//Is the player jumping, standing or fallen over?
-	base.rect = newRect(x, y, z, 100, 200, 100, base);//The feet of the player -- the only part that collides with a wall
-	base.hitbox = newRect(x, y, z, 100, 200, 100, base);//The hitbox of the player, used for registering hits on the player
-	base.hitbox.solid = true;
-	friendlyHitboxes.push(base.hitbox);//Add hitbox to the list of players
-	base.hitboxes.push(base.hitbox);//Add to the list of self hitboxes -- this enables it to be moved with the player when the 'moveEntity()' function is called
-	base.punchBoxRight = newRect(x+75, y+50, z, 75, 75, 75, base);//The hitbox of the punch attack
-	base.punchBoxRight.solid=false;
-	console.log(base.rect);
-	base.punchBoxLeft = newRect(x-50, y+50, z, 75, 75, 75, base);
-	base.punchBoxLeft.solid=false;
-	base.hitboxes.push(base.punchBoxRight, base.punchBoxLeft);
-	friendlyAttackboxes.push(base.punchBoxRight, base.punchBoxLeft);
+	base.rect = newRect(x, y, z, 100, 200, 100, base);
+	punchBoxRight = newRect(x+75, y+50, z, 75, 75, 75, base);
+	punchBoxLeft = newRect(x-50, y+50, z, 75, 75, 75, base);
+	base.hitboxes.push(punchBoxLeft, punchBoxRight);
+	friendlyHitboxes.push(punchBoxLeft, punchBoxRight, base.rect);
+
+	addAttack = function(spritesheet, hitbox, damage, duration) {
+		var attack = {
+			duration : duration,
+			spritesheet : spritesheet,
+			damage : damage,
+			hitbox : hitbox,
+		}
+		if(typeof duration == undefined) {attack.duration = spritesheet.length;}
+		return attack;
+	};
 	
+	base.punchRight = addAttack(punchRightSheet, punchBoxRight, 20, 12);
+	base.punchLeft = addAttack(punchLeftSheet, punchBoxLeft, 20, 12);
 	
-	base.isAttacking = false;
-	base.attackFrame = 0;
-	base.attackFrameCount = 11;//Attack lasts 12 frames
-	
-	base.fallspeed = terminal;
-	
-	
-//~~~~~~~~~~~~~~~~~~~~SET FUNCTIONS~~~~~~~~~~~~~~~~~~~~~~~~~		
-	base.setDirection = function(direction){
-		if((direction=="Right" || direction=="Left") && direction!=base.facing){
-			base.facing = direction;
+	stepAttack = function() {
+		if((typeof currentAttack != undefined) && (isAttacking)) {
+			if(attackFrame < (currentAttack.duration - 1)) {
+				attackFrame += 1;
+				if(currentAttack.hitbox.touching(enemyHitboxes) && (attackFrame == 1)) {
+					var target=currentAttack.hitbox.getContact(enemyHitboxes);
+					target.takeDamage(1000);
+				}
+			}
+			else
+			{
+				attackFrame=0;
+				sprite.setAnimation(walkSheet);
+				isAttacking = false;
+			}
 		}
 	};
 	
-	base.executeAttack = function(){
-		if(base.isAttacking){
-			return;
-		}
-		else
-		{
-			base.sprite.setAnimation(base['punch'+base.facing+'Sheet']);
-			base.isAttacking = true;
-			base.attackFrame = 0;
-		}
-	};
-	
-	base.getCurrentAttackBox = function(){
-		if(base.facing=="Right")
-			return base.punchBoxRight;
-		if(base.facing=="Left")
-			return base.punchBoxLeft;
-	};
-	
-	base.stepGravity = function(gravityconstant){
+	stepGravity = function(gravityconstant){
 		if(!isNaN(gravityconstant)){
 			base.fallspeed += gravityconstant;
 			base.fallspeed = Math.min(terminal, base.fallspeed);
@@ -80,26 +75,7 @@ function addPlayer(x,y,z) {
 		}
 		else 
 			throw("attempted to set an undefined gravity constant to 'Player'");
-		base.sprite.shadow.setSpritePosition(base.rect.x,base.rect.y + base.rect.h + base.rect.raycastDown(floors),base.rect.z - 0.2);
-	};
-	
-	base.update = function(){
-		base.stepGravity(gravity);
-		var currentAttackBox = base.getCurrentAttackBox();
-		currentAttackBox.solid = base.isAttacking;
-		if(base.isAttacking){
-			if(base.attackFrame < base.attackFrameCount){
-				base.attackFrame += 1;
-				if(currentAttackBox.touching(enemyHitboxes)&&(base.attackFrame==1)){
-					var target=currentAttackBox.getContact(enemyHitboxes);
-					target.takeDamage(50);
-				}
-			}
-			else
-				{base.attackFrame=0;
-				base.sprite.setAnimation(base.walkSheet);
-				base.isAttacking = false;}
-		}
+		sprite.shadow.setSpritePosition(base.rect.x,base.rect.y + base.rect.h + base.rect.raycastDown(floors),base.rect.z - 0.2);
 	};
 	
 	base.moveEntity = function(x,y,z){
@@ -111,8 +87,36 @@ function addPlayer(x,y,z) {
 		this.x+=x;
 		this.y+=y;
 		this.z+=z;
-		base.sprite.setSpritePosition(base.rect.x,base.rect.y,base.rect.z);
-	}	
+		sprite.setSpritePosition(base.rect.x,base.rect.y,base.rect.z);
+	};
+	
+	base.setDirection = function(direction){
+		if((direction=="Right" || direction=="Left") && direction!=facing){
+			facing = direction;
+		}
+	};
+
+	base.isAttacking = function () {
+		return isAttacking;
+	};
+	
+	base.executeAttack = function(attack){
+		if(isAttacking){
+			return;
+		}
+		else
+		{
+			sprite.setAnimation(base[attack + facing].spritesheet);
+			isAttacking = true;
+			attackFrame = 0;
+			currentAttack = base[attack + facing];
+		}
+	};
+
+	base.update = function(){
+		stepGravity(gravity);
+		stepAttack();
+	};
 	return base;
 }
 	

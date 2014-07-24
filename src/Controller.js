@@ -4,7 +4,7 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 		puppet:puppet,
 	}
 	controller.updateKeyboard = function(){
-		if(!controller.puppet.isAttacking){
+		if(!controller.puppet.isAttacking()){
 			if(key.isDown.right){
 				controller.puppet.rect.x += vel;
 				controller.puppet.setDirection("Right");
@@ -47,7 +47,7 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 	};
 	
 	controller.onAttack = function() {
-		controller.puppet.executeAttack();
+		controller.puppet.executeAttack("punch");
 	}
 	
 	controller.toggleDebug = function() {
