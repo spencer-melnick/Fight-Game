@@ -27,9 +27,17 @@ var terminal = 8;
 var animations = [];
 var debug = false;
 
-image.load("rsrc/img/PlayerSheet.png", "PlayerTest");
-image.load("rsrc/img/PlayerShadow.png", "PlayerShadow");
-image.load("rsrc/img/Enemy.png", "Enemy");
+initialize = function(){
+	console.log("All images loaded, initializing game");
+	this.Player = addPlayer(100, 0, 300);
+	this.Controller = addController(this.Player, 7);
+	new Enemy(500,0,300,100,200,100,"Enemy",100);
+	new Enemy(250,0,300,100,200,100,"Enemy",100);
+	var floor = newRect(0, 200, 0, 800, 10, 600, null);
+	walls.push(floor);
+	floors.push(floor);
+	setInterval(mainloop, 1000/FPS);
+}
 
 if (window.jQuery)
 	console.log("jQuery loaded");
@@ -43,19 +51,6 @@ removeFromArray = function(array,target){
 	}
 };
 
-updateAnimations = function(){
-	for(i = 0; i < animations.length; i++)
-		animations[i].stepFrame();
-};
-
-this.Player = addPlayer(100, 0, 300);
-this.Controller = addController(this.Player, 7);
-new Enemy(500,0,300,100,200,100,"Enemy",100);
-new Enemy(250,0,300,100,200,100,"Enemy",100);
-var floor = newRect(0, 200, 0, 800, 10, 600, null);
-walls.push(floor);
-floors.push(floor);
-
 var mainloop = function(){
 	this.Controller.updateKeyboard();
 	this.Player.update();//Step through the player's attack animation
@@ -64,5 +59,8 @@ var mainloop = function(){
 	debuggerRender([friendlyHitboxes,friendlyAttackboxes,walls]);
 };
 
-setInterval(mainloop, 1000/FPS);
+image.add("rsrc/img/PlayerSheet.png", "PlayerTest");
+image.add("rsrc/img/PlayerShadow.png", "PlayerShadow");
+image.add("rsrc/img/Enemy.png", "Enemy");
+image.load();
 </script>
