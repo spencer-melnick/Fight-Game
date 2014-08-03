@@ -16,8 +16,8 @@ function addPlayer(x,y,z) {
 	//Define animation sheets
 	base.walkRightSheet = [0,1,2,3,4,5,6,7];
 	base.walkLeftSheet = [8,9,10,11,12,13,14,15];
-	base.standLeftSheet = [8];
-	base.standRightSheet = [0];
+	base.standRightSheet = [16,17,18,19];
+	base.standLeftSheet = [23,22,21,20];
 	punchRightSheet = [0];
 	punchLeftSheet = [8];
 	
