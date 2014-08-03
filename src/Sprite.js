@@ -121,8 +121,8 @@ function addSprite(x, y, z, xoffset, yoffset, zoffset, animationframes, imagenam
 			(sprite.yTile) * sprite.spriteheight,
 			sprite.spritewidth,
 			sprite.spriteheight,
-			sprite.x,
-			sprite.y + ((sprite.z+sprite.zoffset)/zScale),
+			Math.round(sprite.x),
+			Math.round(sprite.y + ((sprite.z+sprite.zoffset)/zScale)),
 			sprite.spritewidth,
 			sprite.spriteheight);
 			

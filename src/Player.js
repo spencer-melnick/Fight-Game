@@ -13,16 +13,17 @@ function addPlayer(x,y,z) {
 	attackFrame = 0;
 	
 	//Define animation sheets
-	walkSheet = [0,0,1,1];
-	punchRightSheet = [2];
-	punchLeftSheet = [3];
+	base.walkRightSheet = [0,1,2,3,4,5,6,7];
+	base.walkLeftSheet = [8,9,10,11,12,13,14,15];
+	punchRightSheet = [0];
+	punchLeftSheet = [8];
 	
-	sprite = addSprite(x,y,z,-50,0,50,walkSheet,"PlayerTest",200,200);
+	sprite = addSprite(x,y,z,-30,0,50,base.walkRightSheet,"PlayerTest",128,128);
 	sprite.shadow = new StaticSprite(x, y, z, 0, 0, 5, "PlayerShadow");
 	
-	base.rect = newRect(x, y, z, 100, 200, 100, base);
-	punchBoxRight = newRect(x+75, y+50, z, 75, 75, 75, base);
-	punchBoxLeft = newRect(x-50, y+50, z, 75, 75, 75, base);
+	base.rect = newRect(x, y, z, 65, 115, 65, base);
+	punchBoxRight = newRect(x+55, y+40, z, 45, 35, 45, base);
+	punchBoxLeft  = newRect(x-33, y+40, z, 45, 35, 45, base);
 	base.hitboxes.push(punchBoxLeft, punchBoxRight);
 	friendlyHitboxes.push(punchBoxLeft, punchBoxRight, base.rect);
 
@@ -52,7 +53,7 @@ function addPlayer(x,y,z) {
 			else
 			{
 				attackFrame=0;
-				sprite.setAnimation(walkSheet);
+				sprite.setAnimation(base["walk" + facing + "Sheet"]);
 				isAttacking = false;
 			}
 		}
@@ -75,7 +76,7 @@ function addPlayer(x,y,z) {
 		}
 		else 
 			throw("attempted to set an undefined gravity constant to 'Player'");
-		sprite.shadow.setSpritePosition(base.rect.x,base.rect.y + base.rect.h + base.rect.raycastDown(floors),base.rect.z - 0.2);
+		sprite.shadow.setSpritePosition(base.rect.x+10,base.rect.y+15 + base.rect.h + base.rect.raycastDown(floors),base.rect.z - 0.2);
 	};
 	
 	base.moveEntity = function(x,y,z){
@@ -93,6 +94,7 @@ function addPlayer(x,y,z) {
 	base.setDirection = function(direction){
 		if((direction=="Right" || direction=="Left") && direction!=facing){
 			facing = direction;
+			sprite.setAnimation(base["walk" + facing + "Sheet"]);
 		}
 	};
 
