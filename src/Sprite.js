@@ -58,7 +58,7 @@ function StaticSprite(x, y, z, xoffset, yoffset, zoffset, imagename) {
 	this.context = context = this.canvas.getContext("2d");
 	
 	this.render = function() {
-		this.context.drawImage(this.image, this.x, this.y + ((this.z + this.zoffset) / zScale));
+		this.context.drawImage(this.image, Math.round(this.x), Math.round(this.y + ((this.z + this.zoffset) / zScale)));
 	};
 	
 	this.setSpritePosition = function(x, y, z) {
@@ -112,7 +112,10 @@ function addSprite(x, y, z, xoffset, yoffset, zoffset, animationframes, imagenam
 	}
 	
 	sprite.setAnimation = function(array) {
+		sprite.ticks = 0;
+		sprite.frame = 0;
 		sprite.animationframes = array;
+		sprite.setTile(sprite.animationframes[sprite.frame]);
 	};
 	
 	sprite.render = function() {

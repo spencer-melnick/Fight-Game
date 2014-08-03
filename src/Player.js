@@ -10,11 +10,14 @@ function addPlayer(x,y,z) {
 	facing = "Right";
 	state = "standing";
 	isAttacking = false;
+	isStanding = true;
 	attackFrame = 0;
 	
 	//Define animation sheets
 	base.walkRightSheet = [0,1,2,3,4,5,6,7];
 	base.walkLeftSheet = [8,9,10,11,12,13,14,15];
+	base.standLeftSheet = [8];
+	base.standRightSheet = [0];
 	punchRightSheet = [0];
 	punchLeftSheet = [8];
 	
@@ -72,11 +75,15 @@ function addPlayer(x,y,z) {
 			{
 				base.state = "standing";
 				base.rect.y -= base.fallspeed;
+				
+				surfDist = base.rect.raycastDown(walls);
+				base.rect.y += surfDist;
+				base.moveEntity(0, surfDist, 0);
 			}
 		}
 		else 
 			throw("attempted to set an undefined gravity constant to 'Player'");
-		sprite.shadow.setSpritePosition(base.rect.x+10,base.rect.y+15 + base.rect.h + base.rect.raycastDown(floors),base.rect.z - 0.2);
+			sprite.shadow.setSpritePosition(base.rect.x+10,base.rect.y+15 + base.rect.h + base.rect.raycastDown(floors),base.rect.z - 0.2);
 	};
 	
 	base.moveEntity = function(x,y,z){
@@ -97,6 +104,18 @@ function addPlayer(x,y,z) {
 			sprite.setAnimation(base["walk" + facing + "Sheet"]);
 		}
 	};
+	
+	base.setStanding = function(state) {
+		if (sprite.isStanding != state)
+		{
+			if (state)
+				sprite.setAnimation(base["stand" + facing + "Sheet"]);
+			else
+				sprite.setAnimation(base["walk" + facing + "Sheet"]);
+		}
+		
+		sprite.isStanding = state;
+	}
 
 	base.isAttacking = function () {
 		return isAttacking;

@@ -5,7 +5,10 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 	}
 	controller.updateKeyboard = function(){
 		if(!controller.puppet.isAttacking()){
+			moved = false
 			if(key.isDown.right){
+				moved = true;
+				
 				controller.puppet.rect.x += vel;
 				controller.puppet.setDirection("Right");
 				if (!controller.puppet.rect.touching(walls))//detect if controller.puppet will collide with a wall
@@ -14,6 +17,8 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 					controller.puppet.rect.x -= vel;
 			}
 			if(key.isDown.left){
+				moved = true;
+				
 				controller.puppet.rect.x -= vel;
 				controller.puppet.setDirection("Left");
 				if (!controller.puppet.rect.touching(walls))
@@ -22,6 +27,8 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 					controller.puppet.rect.x += vel;
 			}
 			if(key.isDown.up){
+				moved = true;
+				
 				controller.puppet.rect.z -= vel;
 				if (!controller.puppet.rect.touching(walls))
 					controller.puppet.moveEntity(0, 0, -vel);
@@ -29,12 +36,19 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 					controller.puppet.rect.z += vel;
 			}
 			if(key.isDown.down){
+				moved = true;
+			
 				controller.puppet.rect.z += vel;
 				if (!controller.puppet.rect.touching(walls))
 					controller.puppet.moveEntity(0, 0, vel);
 				else
 					controller.puppet.rect.z -= vel;
 			}
+			
+			if (moved)
+				controller.puppet.setStanding(false);
+			else
+				controller.puppet.setStanding(true);
 		}
 	};
 	
