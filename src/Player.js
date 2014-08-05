@@ -18,8 +18,8 @@ function addPlayer(x,y,z) {
 	base.walkLeftSheet = [8,9,10,11,12,13,14,15];
 	base.standRightSheet = [16,17,18,19];
 	base.standLeftSheet = [23,22,21,20];
-	punchRightSheet = [0];
-	punchLeftSheet = [8];
+	punchRightSheet = [24,25,26,27];
+	punchLeftSheet = [31,30,29,28];
 	
 	sprite = addSprite(x,y,z,-30,0,50,base.walkRightSheet,"PlayerTest",128,128);
 	sprite.shadow = new StaticSprite(x, y, z, 0, 0, 5, "PlayerShadow");
@@ -41,14 +41,14 @@ function addPlayer(x,y,z) {
 		return attack;
 	};
 	
-	base.punchRight = addAttack(punchRightSheet, punchBoxRight, 20, 12);
-	base.punchLeft = addAttack(punchLeftSheet, punchBoxLeft, 20, 12);
+	base.punchRight = addAttack(punchRightSheet, punchBoxRight, 20, 19);
+	base.punchLeft = addAttack(punchLeftSheet, punchBoxLeft, 20, 19);
 	
 	stepAttack = function() {
 		if((typeof currentAttack != undefined) && (isAttacking)) {
 			if(attackFrame < (currentAttack.duration - 1)) {
 				attackFrame += 1;
-				if(currentAttack.hitbox.touching(enemyHitboxes) && (attackFrame == 2)) {
+				if(currentAttack.hitbox.touching(enemyHitboxes) && (attackFrame == 14)) {
 					var target=currentAttack.hitbox.getContact(enemyHitboxes);
 					target.takeDamage(currentAttack.damage);
 				}
@@ -56,8 +56,16 @@ function addPlayer(x,y,z) {
 			else
 			{
 				attackFrame=0;
-				sprite.setAnimation(base["walk" + facing + "Sheet"]);
 				isAttacking = false;
+				//sprite.setAnimation(base[state + facing + "Sheet"]);
+				if(base.isStanding == true)
+				{
+					base.setStanding(true);
+				}
+				else{
+					base.setStanding(false);
+					sprite.setAnimation(base["walk" + facing + "Sheet"]);
+				}
 			}
 		}
 	};
