@@ -6,7 +6,7 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 	controller.updateKeyboard = function(){
 		if(!controller.puppet.isAttacking()){
 			moved = false
-			if(key.isDown.right){
+			if(key.isDown.right && !key.isDown.left){
 				moved = true;
 				
 				controller.puppet.rect.x += vel;
@@ -16,7 +16,7 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 				else
 					controller.puppet.rect.x -= vel;
 			}
-			if(key.isDown.left){
+			if(key.isDown.left && !key.isDown.right){
 				moved = true;
 				
 				controller.puppet.rect.x -= vel;
@@ -26,7 +26,7 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 				else
 					controller.puppet.rect.x += vel;
 			}
-			if(key.isDown.up){
+			if(key.isDown.up && !key.isDown.down){
 				moved = true;
 				
 				controller.puppet.rect.z -= vel;
@@ -35,7 +35,7 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 				else
 					controller.puppet.rect.z += vel;
 			}
-			if(key.isDown.down){
+			if(key.isDown.down && !key.isDown.up){
 				moved = true;
 			
 				controller.puppet.rect.z += vel;
@@ -45,18 +45,23 @@ function addController(puppet, vel){//puppet is the player that is controlled!
 					controller.puppet.rect.z -= vel;
 			}
 			
-			if (moved)
-				controller.puppet.setStanding(false);
+			if (moved) {
+				if (controller.puppet.state != "jump")
+					controller.puppet.updateState("walk");
+			}
 			else
-				controller.puppet.setStanding(true);
+			{
+				if (controller.puppet.state != "jump")
+					controller.puppet.updateState("standing");
+			}
 		}
 	};
 	
 	controller.onJump = function() {
-		if(controller.puppet.state=="standing")
+		if(controller.puppet.state=="standing" || controller.puppet.state == "walk")
 		{
 			controller.puppet.fallspeed = -15;
-			controller.puppet.state="midair";
+			controller.puppet.updateState("jump");
 		}
 	};
 	

@@ -8,7 +8,7 @@ function addPlayer(x,y,z) {
 	fallspeed : terminal,
 	}
 	facing = "Right";
-	state = "standing";
+	base.state = "standing";
 	isAttacking = false;
 	isStanding = true;
 	attackFrame = 0;
@@ -16,10 +16,12 @@ function addPlayer(x,y,z) {
 	//Define animation sheets
 	base.walkRightSheet = [0,1,2,3,4,5,6,7];
 	base.walkLeftSheet = [8,9,10,11,12,13,14,15];
-	base.standRightSheet = [16,17,18,19];
-	base.standLeftSheet = [23,22,21,20];
+	base.standingRightSheet = [16,17,18,19];
+	base.standingLeftSheet = [23,22,21,20];
 	punchRightSheet = [24,25,26,27];
 	punchLeftSheet = [31,30,29,28];
+	base.jumpRightSheet = [32];
+	base.jumpLeftSheet = [33];
 	
 	sprite = addSprite(x,y,z,-30,0,50,base.walkRightSheet,"PlayerTest",128,128);
 	sprite.shadow = new StaticSprite(x, y, z, 0, 0, 5, "PlayerShadow");
@@ -57,15 +59,10 @@ function addPlayer(x,y,z) {
 			{
 				attackFrame=0;
 				isAttacking = false;
-				//sprite.setAnimation(base[state + facing + "Sheet"]);
-				if(base.isStanding == true)
-				{
-					base.setStanding(true);
-				}
-				else{
-					base.setStanding(false);
-					sprite.setAnimation(base["walk" + facing + "Sheet"]);
-				}
+				
+				base.updateState("standing");
+				
+				sprite.setAnimation(base[base.state + facing + "Sheet"]);
 			}
 		}
 	};
@@ -77,12 +74,16 @@ function addPlayer(x,y,z) {
 			base.rect.y += base.fallspeed;
 			if (!base.rect.touching(walls)){
 				base.moveEntity(0, base.fallspeed, 0);
-				base.state = "midair";
+				base.updateState("jump");
+				//sprite.setAnimation(["jump" + facing + "Sheet"]);
 			}
 			else
 			{
-				base.state = "standing";
+				if (base.state == "jump")
+					base.updateState("standing");
+					
 				base.rect.y -= base.fallspeed;
+				base.isStanding = true;
 				
 				surfDist = base.rect.raycastDown(walls);
 				base.rect.y += surfDist;
@@ -109,20 +110,18 @@ function addPlayer(x,y,z) {
 	base.setDirection = function(direction){
 		if((direction=="Right" || direction=="Left") && direction!=facing){
 			facing = direction;
-			sprite.setAnimation(base["walk" + facing + "Sheet"]);
+			sprite.setAnimation(base[base.state + facing + "Sheet"]);
 		}
 	};
 	
-	base.setStanding = function(state) {
-		if (sprite.isStanding != state)
+	base.updateState = function(state) {
+		if (base.state != state)
 		{
-			if (state)
-				sprite.setAnimation(base["stand" + facing + "Sheet"]);
-			else
-				sprite.setAnimation(base["walk" + facing + "Sheet"]);
+			base.state = state;
+			sprite.setAnimation(base[base.state + facing + "Sheet"]);
 		}
-		
-		sprite.isStanding = state;
+			
+		base.state = state;
 	}
 
 	base.isAttacking = function () {
